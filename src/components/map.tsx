@@ -2,13 +2,14 @@ import leaflet, {layerGroup, Marker} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import {useRef, useEffect} from 'react';
 import useMap from '../hooks/use-map.tsx';
-import {CardProps} from './card.tsx';
 import {Markers} from '../const.ts';
+import {City, OffersTypes} from '../types/types.tsx';
 
 type MapProps = {
   baseClassName: string;
-  activeCard?: CardProps | null;
-  cityOffers: CardProps[];
+  activeCard?: OffersTypes | null;
+  cityOffers: OffersTypes[];
+  activeCity: City;
 }
 
 const defaultCustomIcon = leaflet.icon({
@@ -23,9 +24,15 @@ const currentCustomIcon = leaflet.icon({
   iconAnchor: [13, 39],
 });
 
-function Map({baseClassName = 'cities', activeCard, cityOffers}: MapProps): JSX.Element {
+function Map({baseClassName = 'cities', activeCity, activeCard, cityOffers}: MapProps): JSX.Element {
   const mapRef = useRef<HTMLDivElement>(null);
-  const map = useMap(mapRef, cityOffers[0]?.city.location);
+  const map = useMap(mapRef, activeCity.location);
+
+  useEffect(() => {
+    if (map) {
+      map.setView([activeCity.location.latitude, activeCity.location.longitude], activeCity.location.zoom);
+    }
+  }, [activeCity, map]);
 
   useEffect(() => {
     if (map) {
@@ -49,7 +56,9 @@ function Map({baseClassName = 'cities', activeCard, cityOffers}: MapProps): JSX.
   }, [map, cityOffers, activeCard]);
 
   return (
-    <section className={`${baseClassName}__map map`} style={{ height: '100%' }} ref={mapRef}/>
+    <section className={`${baseClassName}__map map`} style={{height: `${baseClassName === 'cities' ? '100%' : '50vh'}`}}
+      ref={mapRef}
+    />
   );
 }
 

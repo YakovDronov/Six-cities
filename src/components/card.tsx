@@ -1,43 +1,10 @@
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../const.ts';
 import {capitalizeFirstLetter} from '../utils.ts';
-
-export type City = {
-  name: string;
-  location: Location;
-}
-
-export type Location = {
-  latitude: number;
-  longitude: number;
-  zoom: number;
-}
-
-export type CardProps = {
-  id: string;
-  title: string;
-  type: string;
-  price: number;
-  city: City;
-  location: Location;
-  isFavorite: boolean;
-  isPremium: boolean;
-  rating: number;
-  previewImage: string;
-  description: string;
-  bedrooms: number;
-  goods: string[];
-  host: {
-    name: string;
-    avatarUrl: string;
-    isPro: boolean;
-  };
-  images: string[];
-  maxAdults: number;
-}
+import {OffersTypes} from '../types/types.tsx';
 
 function Card({data, onHandlerChangeIdActiveCard, onHandlerRemoveIdActiveCard, type}: {
-  data: CardProps;
+  data: OffersTypes;
   onHandlerChangeIdActiveCard?: () => void;
   onHandlerRemoveIdActiveCard?: () => void;
   type?: 'favorites' | 'near-places';
@@ -51,22 +18,20 @@ function Card({data, onHandlerChangeIdActiveCard, onHandlerRemoveIdActiveCard, t
       onMouseEnter={onHandlerChangeIdActiveCard && onHandlerChangeIdActiveCard}
       onMouseLeave={onHandlerRemoveIdActiveCard && onHandlerRemoveIdActiveCard}
     >
-      <Link to={`${AppRoute.OfferStatic}/${data.id}`}>
-        {data.isPremium
-          ?
-          <div className="place-card__mark">
-            <span>Premium</span>
-          </div>
-          :
-          null}
-        <div className={`${type === 'favorites' ? 'favorites' : 'near-places'}__image-wrapper place-card__image-wrapper`}>
-          <a href="#">
-            <img className="place-card__image" src={data.previewImage} width={imgWidth} height={imgHeight}
-              alt="Place image"
-            />
-          </a>
+      {data.isPremium
+        ?
+        <div className="place-card__mark">
+          <span>Premium</span>
         </div>
-      </Link>
+        :
+        null}
+      <div className={`${type === 'favorites' ? 'favorites' : 'near-places'}__image-wrapper place-card__image-wrapper`}>
+        <Link to={`${AppRoute.OfferStatic}/${data.id}`}>
+          <img className="place-card__image" src={data.previewImage} width={imgWidth} height={imgHeight}
+            alt="Place image"
+          />
+        </Link>
+      </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">

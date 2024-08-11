@@ -1,12 +1,13 @@
 import {capitalizeFirstLetter, getAdultsCount, getBedroomsCount} from '../../../utils.ts';
-import {CardProps} from '../../../components/card.tsx';
+import {OffersTypes, ReviewsTypes} from '../../../types/types.tsx';
 import Reviews from './reviews.tsx';
 
 type OfferContainerProps = {
-  currentOffer: CardProps;
+  currentOffer: OffersTypes;
+  reviews: ReviewsTypes[];
 }
 
-function OfferContainer({currentOffer}: OfferContainerProps): JSX.Element {
+function OfferContainer({currentOffer, reviews}: OfferContainerProps): JSX.Element {
   return (
     <div className="offer__container container">
       <div className="offer__wrapper">
@@ -83,7 +84,7 @@ function OfferContainer({currentOffer}: OfferContainerProps): JSX.Element {
             </p>
           </div>
         </div>
-        <Reviews/>
+        <Reviews reviews={reviews}/>
       </div>
     </div>
   );

@@ -1,8 +1,9 @@
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const.ts';
-import Card, {CardProps} from '../../components/card.tsx';
 import {getFavotiteOfferCard, getOfferCardByCity} from '../../utils.ts';
 import Layout from '../../components/layout.tsx';
+import {OffersTypes} from '../../types/types.tsx';
+import Card from '../../components/card.tsx';
 
 function Favorites(): JSX.Element {
   const offerCardsByCity = getOfferCardByCity(getFavotiteOfferCard);
@@ -19,13 +20,13 @@ function Favorites(): JSX.Element {
                   <li className="favorites__locations-items" key={cityName}>
                     <div className="favorites__locations locations locations--current">
                       <div className="locations__item">
-                        <a className="locations__item-link" href="#">
+                        <Link className="locations__item-link" to="#">
                           <span>{cityName}</span>
-                        </a>
+                        </Link>
                       </div>
                     </div>
                     <div className="favorites__places">
-                      {offerCards.map((offerCard: CardProps) => (
+                      {offerCards.map((offerCard: OffersTypes) => (
                         <Card
                           key={offerCard.id}
                           data={offerCard}

@@ -1,3 +1,5 @@
+import {City} from './types/types.tsx';
+
 export enum AppRoute {
   Main = '/',
   Login = '/login',
@@ -12,7 +14,56 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-export const CITIES: string[] = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+export const CITIES: City[] = [
+  {
+    name: 'Paris',
+    location: {
+      latitude: 48.856663,
+      longitude: 2.351556,
+      zoom: 8,
+    }
+  },
+  {
+    name: 'Cologne',
+    location: {
+      latitude: 50.930779,
+      longitude: 6.938399,
+      zoom: 8,
+    }
+  },
+  {
+    name: 'Brussels',
+    location: {
+      latitude: 50.826827,
+      longitude: 4.373448,
+      zoom: 8,
+    }
+  },
+  {
+    name: 'Amsterdam',
+    location: {
+      latitude: 52.372898,
+      longitude: 4.893,
+      zoom: 8,
+    }
+  },
+  {
+    name: 'Hamburg',
+    location: {
+      latitude: 53.5753,
+      longitude: 10.0153,
+      zoom: 8,
+    }
+  },
+  {
+    name: 'Dusseldorf',
+    location: {
+      latitude: 51.2217,
+      longitude: 6.77616,
+      zoom: 8,
+    }
+  },
+];
 
 export enum Markers {
   Default = 'markup/img/pin.svg',

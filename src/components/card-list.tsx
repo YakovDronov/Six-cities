@@ -1,8 +1,9 @@
-import Card, {CardProps} from './card.tsx';
+import {OffersTypes} from '../types/types.tsx';
+import Card from './card.tsx';
 
 type CardListProps = {
-  cityOffers: CardProps[];
-  onHover: (offer: CardProps | null) => void;
+  cityOffers: OffersTypes[];
+  onHover: (offer: OffersTypes | null) => void;
 };
 
 function CardList({ cityOffers, onHover }: CardListProps): JSX.Element {
@@ -22,7 +23,7 @@ function CardList({ cityOffers, onHover }: CardListProps): JSX.Element {
 
   return (
     <div className="cities__places-list places__list tabs__content">
-      {cityOffers.map((offer: CardProps) => (
+      {cityOffers.map((offer: OffersTypes) => (
         <Card
           key={offer.id}
           data={offer}
