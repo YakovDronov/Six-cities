@@ -36,11 +36,21 @@ function Offer({reviews}: OfferProps): JSX.Element {
                 )}
               </div>
             </div>
-            <OfferContainer currentOffer={currentOffer} reviews={reviews}/>
-            <Map baseClassName="offer" activeCard={currentOffer} cityOffers={nearOfferCards}/>
+            <OfferContainer
+              currentOffer={currentOffer}
+              reviews={reviews}
+            />
+            <Map
+              baseClassName="offer"
+              activeCity={currentOffer.city}
+              activeCard={currentOffer}
+              cityOffers={[...nearOfferCards, currentOffer]}
+            />
           </section>
           <div className="container">
-            <NearPlaces nearOfferCards={nearOfferCards}/>
+            <NearPlaces
+              nearOfferCards={nearOfferCards}
+            />
           </div>
         </main>
       </Layout>

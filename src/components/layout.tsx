@@ -20,8 +20,8 @@ function Layout({children} : {children: React.ReactNode}) {
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
                     <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <Link className="header__favorite-count" to={AppRoute.Favorites}>{getFavotiteOfferCard.length}</Link>
                   </Link>
+                  <Link className="header__favorite-count" to={AppRoute.Favorites}>{getFavotiteOfferCard.length}</Link>
                 </li>
                 <li className="header__nav-item">
                   <span className="header__nav-link">

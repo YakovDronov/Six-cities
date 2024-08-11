@@ -1,7 +1,3 @@
-import {CITIES} from '../const.ts';
-
-export type CityTypes = typeof CITIES[number];
-
 export type City = {
   name: string;
   location: Location;

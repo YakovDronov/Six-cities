@@ -18,22 +18,20 @@ function Card({data, onHandlerChangeIdActiveCard, onHandlerRemoveIdActiveCard, t
       onMouseEnter={onHandlerChangeIdActiveCard && onHandlerChangeIdActiveCard}
       onMouseLeave={onHandlerRemoveIdActiveCard && onHandlerRemoveIdActiveCard}
     >
-      <Link to={`${AppRoute.OfferStatic}/${data.id}`}>
-        {data.isPremium
-          ?
-          <div className="place-card__mark">
-            <span>Premium</span>
-          </div>
-          :
-          null}
-        <div className={`${type === 'favorites' ? 'favorites' : 'near-places'}__image-wrapper place-card__image-wrapper`}>
-          <Link to={`${AppRoute.OfferStatic}/${data.id}`}>
-            <img className="place-card__image" src={data.previewImage} width={imgWidth} height={imgHeight}
-              alt="Place image"
-            />
-          </Link>
+      {data.isPremium
+        ?
+        <div className="place-card__mark">
+          <span>Premium</span>
         </div>
-      </Link>
+        :
+        null}
+      <div className={`${type === 'favorites' ? 'favorites' : 'near-places'}__image-wrapper place-card__image-wrapper`}>
+        <Link to={`${AppRoute.OfferStatic}/${data.id}`}>
+          <img className="place-card__image" src={data.previewImage} width={imgWidth} height={imgHeight}
+            alt="Place image"
+          />
+        </Link>
+      </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">

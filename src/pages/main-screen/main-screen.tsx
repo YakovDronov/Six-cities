@@ -1,9 +1,10 @@
-import {CityTypes, OffersTypes} from '../../types/types.tsx';
+import {City, OffersTypes} from '../../types/types.tsx';
 import Layout from '../../components/layout.tsx';
 import CardList from '../../components/card-list.tsx';
 import {useState} from 'react';
 import Map from '../../components/map.tsx';
 import LocationList from './components/location-list.tsx';
+import {CITIES} from '../../const.ts';
 
 type MainScreenProps = {
   offers: OffersTypes[];
@@ -11,15 +12,15 @@ type MainScreenProps = {
 
 function MainScreen({offers}: MainScreenProps): JSX.Element {
   const [activeCard, setActiveCard] = useState<OffersTypes | null>(null);
-  const [activeCity, setActiveCity] = useState<CityTypes>('Amsterdam');
-  const [cityOffers, setCityOffers] = useState(offers.filter((offer) => offer.city.name === activeCity));
+  const [activeCity, setActiveCity] = useState<City>(CITIES[3]);
+  const [cityOffers, setCityOffers] = useState(offers.filter((offer) => offer.city.name === activeCity.name));
   const handleCardHover = (offersHover: OffersTypes | null): void => {
     setActiveCard(offersHover);
   };
 
-  const handlerCityClick = (city: string): void => {
+  const handlerCityClick = (city: City): void => {
     setActiveCity(city);
-    setCityOffers(offers.filter((offer) => offer.city.name === city));
+    setCityOffers(offers.filter((offer) => offer.city.name === city.name));
   };
 
   return (
@@ -29,14 +30,17 @@ function MainScreen({offers}: MainScreenProps): JSX.Element {
           <h1 className="visually-hidden">Cities</h1>
           <div className="tabs">
             <section className="locations container">
-              <LocationList handlerCityClick={handlerCityClick} activeCity={activeCity}/>
+              <LocationList
+                handlerCityClick={handlerCityClick}
+                activeCity={activeCity}
+              />
             </section>
           </div>
           <div className="cities">
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{offers.length} places to stay in {activeCity}</b>
+                <b className="places__found">{offers.length} places to stay in {activeCity.name}</b>
                 <form className="places__sorting" action="#" method="get">
                   <span className="places__sorting-caption">Sort by</span>
                   <span className="places__sorting-type" tabIndex={0}>
@@ -55,7 +59,12 @@ function MainScreen({offers}: MainScreenProps): JSX.Element {
                 <CardList cityOffers={cityOffers} onHover={handleCardHover}/>
               </section>
               <div className="cities__right-section">
-                <Map baseClassName="cities" activeCard={activeCard} cityOffers={cityOffers}/>
+                <Map
+                  baseClassName="cities"
+                  activeCity={activeCity}
+                  activeCard={activeCard}
+                  cityOffers={cityOffers}
+                />
               </div>
             </div>
           </div>
