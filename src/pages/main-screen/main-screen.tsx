@@ -1,26 +1,26 @@
-import {City, OffersTypes} from '../../types/types.tsx';
+import {OffersTypes} from '../../types/types.tsx';
 import Layout from '../../components/layout.tsx';
 import CardList from '../../components/card-list.tsx';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import Map from '../../components/map.tsx';
 import LocationList from './components/location-list.tsx';
-import {CITIES} from '../../const.ts';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../store/actions.ts';
+import {getActiveOffersLength} from '../../utils.ts';
 
-type MainScreenProps = {
-  offers: OffersTypes[];
-}
-
-function MainScreen({offers}: MainScreenProps): JSX.Element {
+function MainScreen(): JSX.Element {
+  const activeCity = useSelector((state: RootState) => state.currenrCity.currentCity);
+  const offers = useSelector((state: RootState) => state.offers.offers);
   const [activeCard, setActiveCard] = useState<OffersTypes | null>(null);
-  const [activeCity, setActiveCity] = useState<City>(CITIES[3]);
   const [cityOffers, setCityOffers] = useState(offers.filter((offer) => offer.city.name === activeCity.name));
+
+  useEffect(() => {
+    const filteredOffers = offers.filter((offer) => offer.city.name === activeCity.name);
+    setCityOffers(filteredOffers);
+  }, [activeCity, offers]);
+
   const handleCardHover = (offersHover: OffersTypes | null): void => {
     setActiveCard(offersHover);
-  };
-
-  const handlerCityClick = (city: City): void => {
-    setActiveCity(city);
-    setCityOffers(offers.filter((offer) => offer.city.name === city.name));
   };
 
   return (
@@ -31,7 +31,6 @@ function MainScreen({offers}: MainScreenProps): JSX.Element {
           <div className="tabs">
             <section className="locations container">
               <LocationList
-                handlerCityClick={handlerCityClick}
                 activeCity={activeCity}
               />
             </section>
@@ -40,11 +39,11 @@ function MainScreen({offers}: MainScreenProps): JSX.Element {
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{cityOffers.length} places to stay in {activeCity.name}</b>
+                <b className="places__found">{cityOffers.length} {getActiveOffersLength(cityOffers.length)} to stay in {activeCity.name}</b>
                 <form className="places__sorting" action="#" method="get">
                   <span className="places__sorting-caption">Sort by</span>
                   <span className="places__sorting-type" tabIndex={0}>
-    Popular
+                    Popular
                     <svg className="places__sorting-arrow" width="7" height="4">
                       <use xlinkHref="#icon-arrow-select"></use>
                     </svg>
@@ -56,7 +55,10 @@ function MainScreen({offers}: MainScreenProps): JSX.Element {
                     <li className="places__option" tabIndex={0}>Top rated first</li>
                   </ul>
                 </form>
-                <CardList cityOffers={cityOffers} onHover={handleCardHover}/>
+                <CardList
+                  cityOffers={cityOffers}
+                  onHover={handleCardHover}
+                />
               </section>
               <div className="cities__right-section">
                 <Map

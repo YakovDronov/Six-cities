@@ -27,3 +27,4 @@ export const getNearOfferCardById = (offerId: string | undefined) => Offers.filt
 
 export const getBedroomsCount = (count: number): string => `${count} Bedroom${count > 1 ? 's' : ''}`;
 export const getAdultsCount = (count: number): string => `Max ${count} adult${count > 1 ? 's' : ''}`;
+export const getActiveOffersLength = (count: number): string => `place${count > 1 ? 's' : ''}`;
