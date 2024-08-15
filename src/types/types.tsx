@@ -1,3 +1,5 @@
+import {SORTING} from '../const.ts';
+
 export type City = {
   name: string;
   location: Location;
@@ -43,3 +45,5 @@ export type ReviewsTypes = {
   comment: string;
   rating: number;
 }
+
+export type Sorting = typeof SORTING[number];
