@@ -7,15 +7,18 @@ import {getNearOfferCardById, getOfferById} from '../../utils.ts';
 import {v4 as uuidv4} from 'uuid';
 import {OffersTypes, ReviewsTypes} from '../../types/types.tsx';
 import Map from '../../components/map.tsx';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../store/actions.ts';
 
 type OfferProps = {
   reviews: ReviewsTypes[];
 }
 
 function Offer({reviews}: OfferProps): JSX.Element {
+  const offers = useSelector((state: RootState) => state.offers.offers);
   const {id: offerId} = useParams();
-  const currentOffer = getOfferById(offerId);
-  const nearOfferCards: OffersTypes[] = getNearOfferCardById(offerId);
+  const currentOffer = getOfferById(offers, offerId);
+  const nearOfferCards: OffersTypes[] = getNearOfferCardById(offers, offerId);
 
   if (!currentOffer) {
     return <NotFound/>;
