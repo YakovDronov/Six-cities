@@ -1,8 +1,8 @@
 import {combineReducers} from '@reduxjs/toolkit';
-import {offersReducer} from './offers/offers.ts';
-import {currentCityReducer} from './city/city.ts';
+import {offersReducer} from './reducers/offersReducer.ts';
+import {currentCityReducer} from './reducers/cityReducer.ts';
 
-export const reducers = combineReducers({
-  currenrCity: currentCityReducer,
+export default combineReducers({
+  currentCity: currentCityReducer,
   offers: offersReducer,
 });

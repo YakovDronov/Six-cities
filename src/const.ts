@@ -65,6 +65,8 @@ export const CITIES: City[] = [
   },
 ];
 
+export const SORTING = ['Popular', 'Price: low to high', 'Price: high to low', 'Top rated first'] as const;
+
 export enum Markers {
   Default = 'markup/img/pin.svg',
   Current = 'markup/img/pin-active.svg',
