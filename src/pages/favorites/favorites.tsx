@@ -4,9 +4,12 @@ import {getFavotiteOfferCard, getOfferCardByCity} from '../../utils.ts';
 import Layout from '../../components/layout.tsx';
 import {OffersTypes} from '../../types/types.tsx';
 import Card from '../../components/card.tsx';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../store/actions.ts';
 
 function Favorites(): JSX.Element {
-  const offerCardsByCity = getOfferCardByCity(getFavotiteOfferCard);
+  const offers = useSelector((state: RootState) => state.offers.offers);
+  const offerCardsByCity = getOfferCardByCity(getFavotiteOfferCard(offers));
 
   return (
     <div className="page">
