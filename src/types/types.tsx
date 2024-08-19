@@ -1,4 +1,5 @@
 import {SORTING} from '../const.ts';
+import {store} from '../store';
 
 export type City = {
   name: string;
@@ -47,3 +48,7 @@ export type ReviewsTypes = {
 }
 
 export type Sorting = typeof SORTING[number];
+
+export type State = ReturnType<typeof store.getState>;
+
+export type AppDispatch = typeof store.dispatch;
