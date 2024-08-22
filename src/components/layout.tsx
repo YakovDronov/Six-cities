@@ -1,8 +1,12 @@
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../const.ts';
 import {getFavotiteOfferCard} from '../utils.ts';
+import {logoutAction} from '../store/api-actions.ts';
+import {useAppDispatch} from '../store/actions.ts';
 
 function Layout({children} : {children: React.ReactNode}) {
+  const dispatch = useAppDispatch();
+
   return (
     <>
       <header className="header">
@@ -23,10 +27,14 @@ function Layout({children} : {children: React.ReactNode}) {
                   </Link>
                   <Link className="header__favorite-count" to={AppRoute.Favorites}>{getFavotiteOfferCard.length}</Link>
                 </li>
-                <li className="header__nav-item">
-                  <span className="header__nav-link">
+                <li className="header__nav-item" onClick={(evt) => {
+                  evt.preventDefault();
+                  dispatch(logoutAction());
+                }}
+                >
+                  <Link to={'/'} className="header__nav-link">
                     <span className="header__signout">Sign out</span>
-                  </span>
+                  </Link>
                 </li>
               </ul>
             </nav>
