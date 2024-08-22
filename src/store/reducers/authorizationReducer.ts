@@ -1,18 +1,23 @@
 import {AuthorizationStatus} from '../../const.ts';
 import {createReducer} from '@reduxjs/toolkit';
-import {requireAuthorization} from '../actions.ts';
+import {requireAuthorization, setOffersDataLoadingStatus} from '../actions.ts';
 
 type initialState = {
-  requireAuthorization: AuthorizationStatus;
+  authorizationStatus: AuthorizationStatus;
+  isOffersDataLoading: boolean;
 }
 
 const initialState: initialState = {
-  requireAuthorization: AuthorizationStatus.Unknown,
+  authorizationStatus: AuthorizationStatus.Unknown,
+  isOffersDataLoading: false,
 };
 
 export const authorizationReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(requireAuthorization, (state, action) => {
-      state.requireAuthorization = action.payload;
+      state.authorizationStatus = action.payload;
+    })
+    .addCase(setOffersDataLoadingStatus, (state, action) => {
+      state.isOffersDataLoading = action.payload;
     });
 });

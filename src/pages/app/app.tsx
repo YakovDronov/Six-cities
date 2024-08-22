@@ -1,5 +1,5 @@
 import MainScreen from '../main-screen/main-screen.tsx';
-import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import {Reviews} from '../../mock/reviews.tsx';
 import {AppRoute, AuthorizationStatus} from '../../const.ts';
 import Login from '../login/login.tsx';
@@ -7,10 +7,21 @@ import Favorites from '../favorites/favorites.tsx';
 import Offer from '../offer/offer.tsx';
 import NotFound from '../../components/not-found.tsx';
 import PrivateRoute from '../../components/private-route.tsx';
+import {useAppSelector} from '../../store/actions.ts';
+import {LoadingScreen} from '../../loading-screen.tsx';
+import {HistoryRouter} from '../../components/history-route/history-route.tsx';
+import {browserHistory} from '../../browser-history.ts';
 
 function App(): JSX.Element {
+  const authorizationStatus = useAppSelector((state) => state.authorizationReducer.authorizationStatus);
+  const isOffersDataLoading = useAppSelector((state) => state.authorizationReducer.isOffersDataLoading);
+
+  if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {
+    return (<LoadingScreen/>);
+  }
+
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
         <Route
           path={AppRoute.Main}
@@ -42,7 +53,7 @@ function App(): JSX.Element {
         >
         </Route>
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 
