@@ -1,6 +1,5 @@
 import {createReducer} from '@reduxjs/toolkit';
 import {OffersTypes} from '../../types/types.tsx';
-import {Offers} from '../../mock/offers.ts';
 import {setOffers} from '../actions.ts';
 
 type initialState = {
@@ -8,7 +7,7 @@ type initialState = {
 }
 
 const initialState: initialState = {
-  offers: Offers
+  offers: []
 };
 
 export const offersReducer = createReducer(initialState, (builder) => {
