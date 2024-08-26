@@ -1,24 +1,48 @@
 import Layout from '../../components/layout.tsx';
-import {useParams} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import NotFound from '../../components/not-found.tsx';
 import OfferContainer from './component/offer-container.tsx';
 import NearPlaces from './component/near-places.tsx';
-import {getNearOfferCardById, getOfferById} from '../../utils.ts';
 import {v4 as uuidv4} from 'uuid';
-import {OffersTypes, ReviewsTypes} from '../../types/types.tsx';
+import {NearOffersTypes, OffersTypes} from '../../types/types.tsx';
 import Map from '../../components/map.tsx';
-import {useSelector} from 'react-redux';
-import {RootState} from '../../store/actions.ts';
+import {useEffect, useState} from 'react';
+import {api, store} from '../../store';
+import {APIRoute, AppRoute} from '../../const.ts';
+import {fetchOffersAction} from '../../store/api-actions.ts';
 
-type OfferProps = {
-  reviews: ReviewsTypes[];
-}
-
-function Offer({reviews}: OfferProps): JSX.Element {
-  const offers = useSelector((state: RootState) => state.offers.offers);
+function Offer(): JSX.Element {
+  const navigate = useNavigate();
   const {id: offerId} = useParams();
-  const currentOffer = getOfferById(offers, offerId);
-  const nearOfferCards: OffersTypes[] = getNearOfferCardById(offers, offerId);
+
+  const [currentOffer, setCurrentOffer] = useState<OffersTypes | undefined>();
+  const [nearOfferCards, setNearOfferCards] = useState<NearOffersTypes[] | undefined>();
+
+  const onHandleFavorite = async () => {
+    try {
+      const offerStatus = currentOffer?.isFavorite;
+      const status = Number(!offerStatus);
+      await api.post<OffersTypes[]>(`${APIRoute.Favorite}/${offerId}/${status}`);
+      store.dispatch(fetchOffersAction());
+    } catch {
+      navigate(AppRoute.Error);
+    }
+  };
+
+  useEffect(() => {
+    if (offerId) {
+      (async () => {
+        try {
+          const {data: currentOfferData} = await api.get<OffersTypes>(`${APIRoute.Offers}/${offerId}`);
+          const {data: nearOfferCardsData} = await api.get<NearOffersTypes[]>(`${APIRoute.Offers}/${offerId}${APIRoute.Nearby}`);
+          setCurrentOffer(currentOfferData);
+          setNearOfferCards(nearOfferCardsData);
+        } catch {
+          navigate(AppRoute.Error);
+        }
+      })();
+    }
+  }, [navigate, offerId]);
 
   if (!currentOffer) {
     return <NotFound/>;
@@ -41,7 +65,7 @@ function Offer({reviews}: OfferProps): JSX.Element {
             </div>
             <OfferContainer
               currentOffer={currentOffer}
-              reviews={reviews}
+              onHandleFavorite={onHandleFavorite}
             />
             <Map
               baseClassName="offer"

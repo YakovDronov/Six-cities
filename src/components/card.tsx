@@ -50,7 +50,7 @@ function Card({data, onHandlerChangeIdActiveCard, onHandlerRemoveIdActiveCard, t
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: '80%'}}></span>
+            <span style={{width: `${data.rating / 5 * 100}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

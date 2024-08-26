@@ -12,7 +12,7 @@ function NearPlaces({nearOfferCards}: NearPlacesProps): JSX.Element {
         Other places in the neighbourhood
       </h2>
       <div className="near-places__list places__list">
-        {nearOfferCards.map((item: OffersTypes) =>
+        {nearOfferCards.slice(0, 3).map((item: OffersTypes) =>
           <Card key={item.id} data={item} type={'near-places'}/>)}
       </div>
     </section>

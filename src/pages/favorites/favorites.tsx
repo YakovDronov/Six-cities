@@ -1,6 +1,6 @@
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const.ts';
-import {getFavotiteOfferCard, getOfferCardByCity} from '../../utils.ts';
+import {getFavotiteLength, getFavotiteOfferCard, getOfferCardByCity} from '../../utils.ts';
 import Layout from '../../components/layout.tsx';
 import {OffersTypes} from '../../types/types.tsx';
 import Card from '../../components/card.tsx';
@@ -10,38 +10,55 @@ import {RootState} from '../../store/actions.ts';
 function Favorites(): JSX.Element {
   const offers = useSelector((state: RootState) => state.offers.offers);
   const offerCardsByCity = getOfferCardByCity(getFavotiteOfferCard(offers));
+  const offerCardsLength = getFavotiteLength(getFavotiteOfferCard(offers));
 
   return (
-    <div className="page">
+    <div className={`page ${offerCardsLength.length < 1 ? 'page--favorites-empty' : ''}`}>
       <Layout>
-        <main className="page__main page__main--favorites">
-          <div className="page__favorites-container container">
-            <section className="favorites">
-              <h1 className="favorites__title">Saved listing</h1>
-              <ul className="favorites__list">
-                {Object.entries(offerCardsByCity).map(([cityName, offerCards]) => (
-                  <li className="favorites__locations-items" key={cityName}>
-                    <div className="favorites__locations locations locations--current">
-                      <div className="locations__item">
-                        <Link className="locations__item-link" to="#">
-                          <span>{cityName}</span>
-                        </Link>
+        <main
+          className={`page__main page__main--favorites ${offerCardsLength.length < 1 ? 'page__main--favorites-empty' : ''}`}
+        >
+          ${offerCardsLength.length > 0
+            ?
+            <div className="page__favorites-container container">
+              <section className="favorites">
+                <h1 className="favorites__title">Saved listing</h1>
+                <ul className="favorites__list">
+                  {Object.entries(offerCardsByCity).map(([cityName, offerCards]) => (
+                    <li className="favorites__locations-items" key={cityName}>
+                      <div className="favorites__locations locations locations--current">
+                        <div className="locations__item">
+                          <Link className="locations__item-link" to="#">
+                            <span>{cityName}</span>
+                          </Link>
+                        </div>
                       </div>
-                    </div>
-                    <div className="favorites__places">
-                      {offerCards.map((offerCard: OffersTypes) => (
-                        <Card
-                          key={offerCard.id}
-                          data={offerCard}
-                          type={'favorites'}
-                        />
-                      ))}
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          </div>
+                      <div className="favorites__places">
+                        {offerCards.map((offerCard: OffersTypes) => (
+                          <Card
+                            key={offerCard.id}
+                            data={offerCard}
+                            type={'favorites'}
+                          />
+                        ))}
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            </div>
+            :
+            <div className="page__favorites-container container">
+              <section className="favorites favorites--empty">
+                <h1 className="visually-hidden">Favorites (empty)</h1>
+                <div className="favorites__status-wrapper">
+                  <b className="favorites__status">Nothing yet saved.</b>
+                  <p className="favorites__status-description">Save properties to narrow down search or plan your future
+                  trips.
+                  </p>
+                </div>
+              </section>
+            </div>}
         </main>
       </Layout>
       <footer className="footer container">

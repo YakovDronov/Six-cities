@@ -1,19 +1,23 @@
 import {Fragment, SyntheticEvent, useState} from 'react';
 
-type FormDataProps = {
+export type FormDataProps = {
   rating: number | undefined;
-  review: '';
+  comment: string;
+}
+
+type FormSubmitProps = {
+  onHandleSubmitForm: (data: FormDataProps) => void;
 }
 
 const NUMBER_STARTS = [5, 4, 3, 2, 1];
 const MAX_TEXTAREA_VALUES = 300;
 const MIN_TEXTAREA_VALUES = 50;
 const DEFAULT_FORM_DATE: FormDataProps = {
-  rating: undefined,
-  review: '',
+  rating: 0,
+  comment: '',
 };
 
-function FormSubmit(): JSX.Element {
+function FormSubmit({onHandleSubmitForm}: FormSubmitProps): JSX.Element {
   const [isDisabledButton, setIsDisabledButton] = useState(true);
   const [formDate, setFormDate] = useState<FormDataProps>(DEFAULT_FORM_DATE);
 
@@ -23,14 +27,15 @@ function FormSubmit(): JSX.Element {
     setFormDate(newDate);
 
     if (newDate.rating !== undefined &&
-      newDate.review.length < MAX_TEXTAREA_VALUES &&
-      newDate.review.length >= MIN_TEXTAREA_VALUES) {
+      newDate.comment.length < MAX_TEXTAREA_VALUES &&
+      newDate.comment.length >= MIN_TEXTAREA_VALUES) {
       setIsDisabledButton(false);
     }
   };
 
   const onSubmitChange = (evt: SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
     evt.preventDefault();
+    onHandleSubmitForm(formDate);
     setFormDate(DEFAULT_FORM_DATE);
     setIsDisabledButton(true);
   };
@@ -70,8 +75,8 @@ function FormSubmit(): JSX.Element {
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        onChange={(evt) => handleFieldChange({name: 'review', value: evt.target.value})}
-        value={formDate.review}
+        onChange={(evt) => handleFieldChange({name: 'comment', value: evt.target.value})}
+        value={formDate.comment}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">

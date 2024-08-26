@@ -3,12 +3,12 @@ import 'leaflet/dist/leaflet.css';
 import {useRef, useEffect} from 'react';
 import useMap from '../hooks/use-map.tsx';
 import {Markers} from '../const.ts';
-import {City, OffersTypes} from '../types/types.tsx';
+import {City, NearOffersTypes, OffersTypes} from '../types/types.tsx';
 
 type MapProps = {
   baseClassName: string;
   activeCard?: OffersTypes | null;
-  cityOffers: OffersTypes[];
+  cityOffers: NearOffersTypes[];
   activeCity: City;
 }
 
@@ -39,8 +39,8 @@ function Map({baseClassName = 'cities', activeCity, activeCard, cityOffers}: Map
       const markerLayer = layerGroup().addTo(map);
       cityOffers.forEach((offer) => {
         const marker = new Marker({
-          lat: offer.city.location.latitude,
-          lng: offer.city.location.longitude,
+          lat: offer.location.latitude,
+          lng: offer.location.longitude,
         }, {
           icon: activeCard && activeCard.id === offer.id ? currentCustomIcon : defaultCustomIcon,
         });

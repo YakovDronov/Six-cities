@@ -35,6 +35,30 @@ export type OffersTypes = {
   maxAdults: number;
 }
 
+export type NearOffersTypes = {
+  id: string;
+  title: string;
+  type: string;
+  price: number;
+  city: {
+    name: string;
+    location: {
+      latitude: number;
+      longitude: number;
+      zoom: number;
+    };
+  };
+  location: {
+    latitude: number;
+    longitude: number;
+    zoom: number;
+  };
+  isFavorite: boolean;
+  isPremium: boolean;
+  rating: number;
+  previewImage: string;
+}
+
 export type ReviewsTypes = {
   id: string;
   date: string;
@@ -58,8 +82,16 @@ export type AuthData = {
   password: string;
 };
 
-export type UserData = {
+export type LoginData = {
   id: number;
+  email: string;
+  token: string;
+};
+
+export type UserData = {
+  name: string;
+  avatarURL: string;
+  isPro: boolean;
   email: string;
   token: string;
 };

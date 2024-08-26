@@ -21,6 +21,7 @@ export const getOfferCardByCity = (offers: OffersTypes[]) => {
 };
 
 export const getFavotiteOfferCard = (offers: OffersTypes[]) => offers.filter((offerCard: OffersTypes) => offerCard.isFavorite);
+export const getFavotiteLength = (offers: OffersTypes[]) => offers.filter((offerCard: OffersTypes) => offerCard);
 export const getOfferById = (offers: OffersTypes[], offerId: string | undefined) => offers.find((offer: OffersTypes): boolean => offer.id === offerId);
 export const getNearOfferCardById = (offers: OffersTypes[], offerId: string | undefined) => offers.filter((offer: OffersTypes): boolean => offer.id !== offerId).slice(0, 3);
 
