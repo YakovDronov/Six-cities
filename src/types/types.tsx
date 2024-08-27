@@ -12,7 +12,7 @@ export type Location = {
   zoom: number;
 }
 
-export type OffersTypes = {
+export type OfferTypes = {
   id: string;
   title: string;
   type: string;
@@ -33,6 +33,30 @@ export type OffersTypes = {
   };
   images: string[];
   maxAdults: number;
+}
+
+export type ShortOfferTypes = {
+  id: string;
+  title: string;
+  type: string;
+  price: number;
+  city: {
+    name: string;
+    location: {
+      latitude: number;
+      longitude: number;
+      zoom: number;
+    };
+  };
+  location: {
+    latitude: number;
+    longitude: number;
+    zoom: number;
+  };
+  isFavorite: boolean;
+  isPremium: boolean;
+  rating: number;
+  previewImage: string;
 }
 
 export type ReviewsTypes = {
@@ -58,8 +82,16 @@ export type AuthData = {
   password: string;
 };
 
-export type UserData = {
+export type LoginData = {
   id: number;
+  email: string;
+  token: string;
+};
+
+export type UserData = {
+  name: string;
+  avatarURL: string;
+  isPro: boolean;
   email: string;
   token: string;
 };

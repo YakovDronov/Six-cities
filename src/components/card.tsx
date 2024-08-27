@@ -1,10 +1,10 @@
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../const.ts';
 import {capitalizeFirstLetter} from '../utils.ts';
-import {OffersTypes} from '../types/types.tsx';
+import {ShortOfferTypes} from '../types/types.tsx';
 
 function Card({data, onHandlerChangeIdActiveCard, onHandlerRemoveIdActiveCard, type}: {
-  data: OffersTypes;
+  data: ShortOfferTypes;
   onHandlerChangeIdActiveCard?: () => void;
   onHandlerRemoveIdActiveCard?: () => void;
   type?: 'favorites' | 'near-places';
@@ -50,7 +50,7 @@ function Card({data, onHandlerChangeIdActiveCard, onHandlerRemoveIdActiveCard, t
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: '80%'}}></span>
+            <span style={{width: `${data.rating / 5 * 100}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

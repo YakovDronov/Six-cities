@@ -1,6 +1,5 @@
 import MainScreen from '../main-screen/main-screen.tsx';
 import {Route, Routes} from 'react-router-dom';
-import {Reviews} from '../../mock/reviews.tsx';
 import {AppRoute, AuthorizationStatus} from '../../const.ts';
 import Login from '../login/login.tsx';
 import Favorites from '../favorites/favorites.tsx';
@@ -44,7 +43,7 @@ function App(): JSX.Element {
         </Route>
         <Route
           path={AppRoute.Offer}
-          element={<Offer reviews={Reviews}/>}
+          element={<Offer/>}
         >
         </Route>
         <Route

@@ -1,4 +1,4 @@
-import {OffersTypes, Sorting} from '../../types/types.tsx';
+import {ShortOfferTypes, Sorting} from '../../types/types.tsx';
 import Layout from '../../components/layout.tsx';
 import CardList from '../../components/card-list.tsx';
 import {useEffect, useState} from 'react';
@@ -13,8 +13,8 @@ import {getActiveOffersLength, getSortedOffers} from './utils.ts';
 function MainScreen(): JSX.Element {
   const activeCity = useSelector((state: RootState) => state.currentCity.currentCity);
   const offers = useSelector((state: RootState) => state.offers.offers);
-  const [activeCard, setActiveCard] = useState<OffersTypes | null>(null);
-  const [filteredOffers, setFilteredOffers] = useState<OffersTypes[]>([]);
+  const [activeCard, setActiveCard] = useState<ShortOfferTypes | null>(null);
+  const [filteredOffers, setFilteredOffers] = useState<ShortOfferTypes[]>([]);
   const [isOpenSorting, setIsOpenSorting] = useState<boolean>(false);
   const [selectedSorting, setSelectedSorting] = useState<Sorting>(SORTING[0]);
 
@@ -25,7 +25,7 @@ function MainScreen(): JSX.Element {
   }, [activeCity.name, offers]);
 
   const handleVisibleSorting = () => setIsOpenSorting((open) => !open);
-  const handleCardHover = (offersHover: OffersTypes | null): void => {
+  const handleCardHover = (offersHover: ShortOfferTypes | null): void => {
     setActiveCard(offersHover);
   };
 

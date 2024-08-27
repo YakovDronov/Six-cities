@@ -1,14 +1,13 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {OffersTypes} from '../../types/types.tsx';
-import {Offers} from '../../mock/offers.ts';
+import {ShortOfferTypes} from '../../types/types.tsx';
 import {setOffers} from '../actions.ts';
 
 type initialState = {
-  offers: OffersTypes[];
+  offers: ShortOfferTypes[];
 }
 
 const initialState: initialState = {
-  offers: Offers
+  offers: []
 };
 
 export const offersReducer = createReducer(initialState, (builder) => {

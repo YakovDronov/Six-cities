@@ -1,13 +1,17 @@
 import {capitalizeFirstLetter, getAdultsCount, getBedroomsCount} from '../../../utils.ts';
-import {OffersTypes, ReviewsTypes} from '../../../types/types.tsx';
+import {OfferTypes} from '../../../types/types.tsx';
 import Reviews from './reviews.tsx';
 
 type OfferContainerProps = {
-  currentOffer: OffersTypes;
-  reviews: ReviewsTypes[];
+  currentOffer: OfferTypes;
+  onHandleFavorite: () => Promise<void>;
 }
 
-function OfferContainer({currentOffer, reviews}: OfferContainerProps): JSX.Element {
+function OfferContainer({currentOffer, onHandleFavorite}: OfferContainerProps): JSX.Element {
+  const onHandleClickFavoriteButton = () => {
+    onHandleFavorite();
+  };
+
   return (
     <div className="offer__container container">
       <div className="offer__wrapper">
@@ -21,7 +25,11 @@ function OfferContainer({currentOffer, reviews}: OfferContainerProps): JSX.Eleme
           <h1 className="offer__name">
             {currentOffer.title}
           </h1>
-          <button className="offer__bookmark-button button" type="button">
+          <button
+            className={`offer__bookmark-button button ${currentOffer.isFavorite ? 'offer__bookmark-button--active' : ''}`}
+            type="button"
+            onClick={onHandleClickFavoriteButton}
+          >
             <svg className="offer__bookmark-icon" width={31} height={33}>
               <use xlinkHref="#icon-bookmark"/>
             </svg>
@@ -30,10 +38,10 @@ function OfferContainer({currentOffer, reviews}: OfferContainerProps): JSX.Eleme
         </div>
         <div className="offer__rating rating">
           <div className="offer__stars rating__stars">
-            <span style={{width: '80%'}}/>
+            <span style={{width: `${currentOffer.rating / 5 * 100}%`}}/>
             <span className="visually-hidden">Rating</span>
           </div>
-          <span className="offer__rating-value rating__value">4.8</span>
+          <span className="offer__rating-value rating__value">{currentOffer.rating}</span>
         </div>
         <ul className="offer__features">
           <li className="offer__feature offer__feature--entire">
@@ -84,7 +92,7 @@ function OfferContainer({currentOffer, reviews}: OfferContainerProps): JSX.Eleme
             </p>
           </div>
         </div>
-        <Reviews reviews={reviews}/>
+        <Reviews/>
       </div>
     </div>
   );
