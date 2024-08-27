@@ -1,10 +1,10 @@
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../const.ts';
 import {capitalizeFirstLetter} from '../utils.ts';
-import {OffersTypes} from '../types/types.tsx';
+import {ShortOfferTypes} from '../types/types.tsx';
 
 function Card({data, onHandlerChangeIdActiveCard, onHandlerRemoveIdActiveCard, type}: {
-  data: OffersTypes;
+  data: ShortOfferTypes;
   onHandlerChangeIdActiveCard?: () => void;
   onHandlerRemoveIdActiveCard?: () => void;
   type?: 'favorites' | 'near-places';

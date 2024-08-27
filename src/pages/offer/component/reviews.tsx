@@ -2,7 +2,7 @@ import FormSubmit, {FormDataProps} from '../../../components/form-submit.tsx';
 import {ReviewsTypes} from '../../../types/types.tsx';
 import {useAppSelector} from '../../../store/actions.ts';
 import {APIRoute, AppRoute, AuthorizationStatus} from '../../../const.ts';
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {api} from '../../../store';
 import {useNavigate, useParams} from 'react-router-dom';
 
@@ -12,18 +12,18 @@ function Reviews(): JSX.Element {
   const [comments, setComments] = useState<ReviewsTypes[] | undefined>();
   const authorizationStatus = useAppSelector((state) => state.authorizationReducer.authorizationStatus);
 
-  const getComments = async () => {
+  const getComments = useCallback(async () => {
     try {
       const {data: commentsData} = await api.get<ReviewsTypes[]>(`${APIRoute.Comments}/${offerId}`);
       setComments(commentsData);
     } catch {
       navigate(AppRoute.Error);
     }
-  };
+  }, [navigate, offerId]);
 
   const onHandleSubmitForm = async (data: FormDataProps) => {
     await api.post<FormDataProps>(`${APIRoute.Comments}/${offerId}`, data);
-    getComments();
+    await getComments();
   };
 
   useEffect(() => {
@@ -36,7 +36,7 @@ function Reviews(): JSX.Element {
         }
       })();
     }
-  }, [navigate, offerId]);
+  }, [getComments, navigate, offerId]);
 
   return (
     <section className="offer__reviews reviews">

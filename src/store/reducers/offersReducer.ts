@@ -1,9 +1,9 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {OffersTypes} from '../../types/types.tsx';
+import {ShortOfferTypes} from '../../types/types.tsx';
 import {setOffers} from '../actions.ts';
 
 type initialState = {
-  offers: OffersTypes[];
+  offers: ShortOfferTypes[];
 }
 
 const initialState: initialState = {

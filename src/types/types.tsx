@@ -12,7 +12,7 @@ export type Location = {
   zoom: number;
 }
 
-export type OffersTypes = {
+export type OfferTypes = {
   id: string;
   title: string;
   type: string;
@@ -35,7 +35,7 @@ export type OffersTypes = {
   maxAdults: number;
 }
 
-export type NearOffersTypes = {
+export type ShortOfferTypes = {
   id: string;
   title: string;
   type: string;

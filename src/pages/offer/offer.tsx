@@ -4,7 +4,7 @@ import NotFound from '../../components/not-found.tsx';
 import OfferContainer from './component/offer-container.tsx';
 import NearPlaces from './component/near-places.tsx';
 import {v4 as uuidv4} from 'uuid';
-import {NearOffersTypes, OffersTypes} from '../../types/types.tsx';
+import {ShortOfferTypes, OfferTypes} from '../../types/types.tsx';
 import Map from '../../components/map.tsx';
 import {useEffect, useState} from 'react';
 import {api, store} from '../../store';
@@ -15,14 +15,14 @@ function Offer(): JSX.Element {
   const navigate = useNavigate();
   const {id: offerId} = useParams();
 
-  const [currentOffer, setCurrentOffer] = useState<OffersTypes | undefined>();
-  const [nearOfferCards, setNearOfferCards] = useState<NearOffersTypes[] | undefined>();
+  const [currentOffer, setCurrentOffer] = useState<OfferTypes | undefined>();
+  const [nearOfferCards, setNearOfferCards] = useState<ShortOfferTypes[] | undefined>();
 
   const onHandleFavorite = async () => {
     try {
       const offerStatus = currentOffer?.isFavorite;
       const status = Number(!offerStatus);
-      await api.post<OffersTypes[]>(`${APIRoute.Favorite}/${offerId}/${status}`);
+      await api.post<OfferTypes[]>(`${APIRoute.Favorite}/${offerId}/${status}`);
       store.dispatch(fetchOffersAction());
     } catch {
       navigate(AppRoute.Error);
@@ -33,8 +33,8 @@ function Offer(): JSX.Element {
     if (offerId) {
       (async () => {
         try {
-          const {data: currentOfferData} = await api.get<OffersTypes>(`${APIRoute.Offers}/${offerId}`);
-          const {data: nearOfferCardsData} = await api.get<NearOffersTypes[]>(`${APIRoute.Offers}/${offerId}${APIRoute.Nearby}`);
+          const {data: currentOfferData} = await api.get<OfferTypes>(`${APIRoute.Offers}/${offerId}`);
+          const {data: nearOfferCardsData} = await api.get<ShortOfferTypes[]>(`${APIRoute.Offers}/${offerId}${APIRoute.Nearby}`);
           setCurrentOffer(currentOfferData);
           setNearOfferCards(nearOfferCardsData);
         } catch {
@@ -67,17 +67,19 @@ function Offer(): JSX.Element {
               currentOffer={currentOffer}
               onHandleFavorite={onHandleFavorite}
             />
-            <Map
-              baseClassName="offer"
-              activeCity={currentOffer.city}
-              activeCard={currentOffer}
-              cityOffers={[...nearOfferCards, currentOffer]}
-            />
+            {nearOfferCards && (
+              <Map
+                baseClassName="offer"
+                activeCity={currentOffer.city}
+                activeCard={currentOffer}
+                cityOffers={[...nearOfferCards, currentOffer]}
+              />)}
           </section>
           <div className="container">
-            <NearPlaces
-              nearOfferCards={nearOfferCards}
-            />
+            {nearOfferCards && (
+              <NearPlaces
+                nearOfferCards={nearOfferCards}
+              />)}
           </div>
         </main>
       </Layout>

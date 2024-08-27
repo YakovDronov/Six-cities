@@ -3,12 +3,12 @@ import 'leaflet/dist/leaflet.css';
 import {useRef, useEffect} from 'react';
 import useMap from '../hooks/use-map.tsx';
 import {Markers} from '../const.ts';
-import {City, NearOffersTypes, OffersTypes} from '../types/types.tsx';
+import {City, ShortOfferTypes} from '../types/types.tsx';
 
 type MapProps = {
   baseClassName: string;
-  activeCard?: OffersTypes | null;
-  cityOffers: NearOffersTypes[];
+  activeCard?: ShortOfferTypes | null;
+  cityOffers: ShortOfferTypes[];
   activeCity: City;
 }
 

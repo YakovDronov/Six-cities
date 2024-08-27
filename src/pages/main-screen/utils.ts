@@ -1,9 +1,9 @@
-import {OffersTypes, Sorting} from '../../types/types.tsx';
+import {ShortOfferTypes, Sorting} from '../../types/types.tsx';
 
 export const getSortedOffers = ({filteredOffers, sort}: {
-  filteredOffers: OffersTypes[];
+  filteredOffers: ShortOfferTypes[];
   sort: Sorting;
-}): OffersTypes[] => {
+}): ShortOfferTypes[] => {
   switch (sort) {
     case 'Price: low to high':
       return [...filteredOffers].sort((a, b) => a.price - b.price);

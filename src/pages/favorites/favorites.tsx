@@ -2,7 +2,7 @@ import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const.ts';
 import {getFavotiteLength, getFavotiteOfferCard, getOfferCardByCity} from '../../utils.ts';
 import Layout from '../../components/layout.tsx';
-import {OffersTypes} from '../../types/types.tsx';
+import {ShortOfferTypes} from '../../types/types.tsx';
 import Card from '../../components/card.tsx';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../store/actions.ts';
@@ -34,7 +34,7 @@ function Favorites(): JSX.Element {
                         </div>
                       </div>
                       <div className="favorites__places">
-                        {offerCards.map((offerCard: OffersTypes) => (
+                        {offerCards.map((offerCard: ShortOfferTypes) => (
                           <Card
                             key={offerCard.id}
                             data={offerCard}

@@ -1,19 +1,19 @@
 import {Fragment, SyntheticEvent, useState} from 'react';
 
 export type FormDataProps = {
-  rating: number | undefined;
+  rating: number | null;
   comment: string;
 }
 
 type FormSubmitProps = {
-  onHandleSubmitForm: (data: FormDataProps) => void;
+  onHandleSubmitForm: (data: FormDataProps) => Promise<void>;
 }
 
 const NUMBER_STARTS = [5, 4, 3, 2, 1];
 const MAX_TEXTAREA_VALUES = 300;
 const MIN_TEXTAREA_VALUES = 50;
 const DEFAULT_FORM_DATE: FormDataProps = {
-  rating: 0,
+  rating: null,
   comment: '',
 };
 

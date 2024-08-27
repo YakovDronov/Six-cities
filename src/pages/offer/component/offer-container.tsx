@@ -1,13 +1,17 @@
 import {capitalizeFirstLetter, getAdultsCount, getBedroomsCount} from '../../../utils.ts';
-import {OffersTypes} from '../../../types/types.tsx';
+import {OfferTypes} from '../../../types/types.tsx';
 import Reviews from './reviews.tsx';
 
 type OfferContainerProps = {
-  currentOffer: OffersTypes;
-  onHandleFavorite: () => void;
+  currentOffer: OfferTypes;
+  onHandleFavorite: () => Promise<void>;
 }
 
 function OfferContainer({currentOffer, onHandleFavorite}: OfferContainerProps): JSX.Element {
+  const onHandleClickFavoriteButton = () => {
+    onHandleFavorite();
+  };
+
   return (
     <div className="offer__container container">
       <div className="offer__wrapper">
@@ -21,7 +25,11 @@ function OfferContainer({currentOffer, onHandleFavorite}: OfferContainerProps): 
           <h1 className="offer__name">
             {currentOffer.title}
           </h1>
-          <button className={`offer__bookmark-button button ${currentOffer.isFavorite ? 'offer__bookmark-button--active' : ''}`} type="button" onClick={onHandleFavorite}>
+          <button
+            className={`offer__bookmark-button button ${currentOffer.isFavorite ? 'offer__bookmark-button--active' : ''}`}
+            type="button"
+            onClick={onHandleClickFavoriteButton}
+          >
             <svg className="offer__bookmark-icon" width={31} height={33}>
               <use xlinkHref="#icon-bookmark"/>
             </svg>
