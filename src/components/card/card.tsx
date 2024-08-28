@@ -2,9 +2,9 @@ import {Link, useNavigate} from 'react-router-dom';
 import {APIRoute, AppRoute, AuthorizationStatus} from '../../const.ts';
 import {capitalizeFirstLetter} from '../../utils.ts';
 import {OfferTypes, ShortOfferTypes} from '../../types/types.tsx';
-import {useAppSelector} from "../../store/actions.ts";
-import {api, store} from "../../store";
-import {fetchOffersAction} from "../../store/api-actions.ts";
+import {useAppSelector} from '../../store/actions.ts';
+import {api, store} from '../../store';
+import {fetchOffersAction} from '../../store/api-actions.ts';
 
 type CardProps = {
   data: ShortOfferTypes;
@@ -43,8 +43,7 @@ function Card({data, onHandlerChangeIdActiveCard, onHandlerRemoveIdActiveCard, t
         &&
         <div className="place-card__mark">
           <span>Premium</span>
-        </div>
-        }
+        </div>}
       <div className={`${type === 'favorites' ? 'favorites' : 'near-places'}__image-wrapper place-card__image-wrapper`}>
         <Link to={`${AppRoute.OfferStatic}/${data.id}`}>
           <img className="place-card__image" src={data.previewImage} width={imgWidth} height={imgHeight}

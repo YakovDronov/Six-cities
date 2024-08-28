@@ -1,8 +1,8 @@
 import {capitalizeFirstLetter, getAdultsCount, getBedroomsCount} from '../../../utils.ts';
 import {OfferTypes} from '../../../types/types.tsx';
 import Reviews from './reviews.tsx';
-import {useAppSelector} from "../../../store/actions.ts";
-import {AuthorizationStatus} from "../../../const.ts";
+import {useAppSelector} from '../../../store/actions.ts';
+import {AuthorizationStatus} from '../../../const.ts';
 
 type OfferContainerProps = {
   currentOffer: OfferTypes;
@@ -24,8 +24,7 @@ function OfferContainer({currentOffer, onHandleFavorite}: OfferContainerProps): 
           &&
           <div className="offer__mark">
             <span>Premium</span>
-          </div>
-        }
+          </div>}
         <div className="offer__name-wrapper">
           <h1 className="offer__name">
             {currentOffer.title}
@@ -41,8 +40,7 @@ function OfferContainer({currentOffer, onHandleFavorite}: OfferContainerProps): 
                 <use xlinkHref="#icon-bookmark"/>
               </svg>
               <span className="visually-hidden">{currentOffer.isFavorite ? 'In bookmarks' : 'To bookmarks'}</span>
-            </button>
-          }
+            </button>}
         </div>
         <div className="offer__rating rating">
           <div className="offer__stars rating__stars">
@@ -91,8 +89,7 @@ function OfferContainer({currentOffer, onHandleFavorite}: OfferContainerProps): 
             <span className="offer__user-name">{currentOffer.host.name}</span>
             {currentOffer.host.isPro
               &&
-              <span className="offer__user-status">Pro</span>
-            }
+              <span className="offer__user-status">Pro</span>}
           </div>
           <div className="offer__description">
             <p className="offer__text">

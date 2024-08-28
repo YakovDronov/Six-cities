@@ -9,7 +9,7 @@ import {useEffect, useState} from 'react';
 import {api, store} from '../../store';
 import {APIRoute, AppRoute} from '../../const.ts';
 import {fetchOffersAction} from '../../store/api-actions.ts';
-import {LoadingScreen} from "../../components/loading/loading-screen.tsx";
+import {LoadingScreen} from '../../components/loading/loading-screen.tsx';
 
 function Offer(): JSX.Element {
   const navigate = useNavigate();
