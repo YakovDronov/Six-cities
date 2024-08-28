@@ -4,10 +4,10 @@ import {AppRoute, AuthorizationStatus} from '../../const.ts';
 import Login from '../login/login.tsx';
 import Favorites from '../favorites/favorites.tsx';
 import Offer from '../offer/offer.tsx';
-import NotFound from '../../components/not-found.tsx';
-import PrivateRoute from '../../components/private-route.tsx';
+import NotFound from '../../components/not-found/not-found.tsx';
+import PrivateRoute from '../../components/private-route/private-route.tsx';
 import {useAppSelector} from '../../store/actions.ts';
-import {LoadingScreen} from '../../loading-screen.tsx';
+import {LoadingScreen} from '../../components/loading/loading-screen.tsx';
 import {HistoryRouter} from '../../components/history-route/history-route.tsx';
 import {browserHistory} from '../../browser-history.ts';
 

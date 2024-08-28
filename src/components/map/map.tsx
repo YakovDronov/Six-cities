@@ -1,9 +1,9 @@
 import leaflet, {layerGroup, Marker} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import {useRef, useEffect} from 'react';
-import useMap from '../hooks/use-map.tsx';
-import {Markers} from '../const.ts';
-import {City, ShortOfferTypes} from '../types/types.tsx';
+import useMap from '../../hooks/use-map.tsx';
+import {Markers} from '../../const.ts';
+import {City, ShortOfferTypes} from '../../types/types.tsx';
 
 type MapProps = {
   baseClassName: string;

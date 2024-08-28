@@ -1,5 +1,5 @@
 import {ShortOfferTypes} from '../../../types/types.tsx';
-import Card from '../../../components/card.tsx';
+import Card from '../../../components/card/card.tsx';
 
 type NearPlacesProps = {
   nearOfferCards: ShortOfferTypes[];
