@@ -1,5 +1,5 @@
-import {ShortOfferTypes} from '../types/types.tsx';
-import Card from './card.tsx';
+import {ShortOfferTypes} from '../../types/types.tsx';
+import Card from '../card/card.tsx';
 
 type CardListProps = {
   cityOffers: ShortOfferTypes[];

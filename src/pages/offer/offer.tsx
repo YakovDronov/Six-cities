@@ -1,15 +1,15 @@
-import Layout from '../../components/layout.tsx';
+import Layout from '../../components/layout/layout.tsx';
 import {useNavigate, useParams} from 'react-router-dom';
-import NotFound from '../../components/not-found.tsx';
 import OfferContainer from './component/offer-container.tsx';
 import NearPlaces from './component/near-places.tsx';
 import {v4 as uuidv4} from 'uuid';
 import {ShortOfferTypes, OfferTypes} from '../../types/types.tsx';
-import Map from '../../components/map.tsx';
+import Map from '../../components/map/map.tsx';
 import {useEffect, useState} from 'react';
 import {api, store} from '../../store';
 import {APIRoute, AppRoute} from '../../const.ts';
 import {fetchOffersAction} from '../../store/api-actions.ts';
+import {LoadingScreen} from '../../components/loading/loading-screen.tsx';
 
 function Offer(): JSX.Element {
   const navigate = useNavigate();
@@ -20,9 +20,14 @@ function Offer(): JSX.Element {
 
   const onHandleFavorite = async () => {
     try {
-      const offerStatus = currentOffer?.isFavorite;
-      const status = Number(!offerStatus);
+      const offerStatus = !currentOffer?.isFavorite;
+      const status = Number(offerStatus);
       await api.post<OfferTypes[]>(`${APIRoute.Favorite}/${offerId}/${status}`);
+      setCurrentOffer((prevState) => {
+        if(prevState) {
+          return {...prevState, isFavorite: offerStatus};
+        }
+      });
       store.dispatch(fetchOffersAction());
     } catch {
       navigate(AppRoute.Error);
@@ -45,7 +50,7 @@ function Offer(): JSX.Element {
   }, [navigate, offerId]);
 
   if (!currentOffer) {
-    return <NotFound/>;
+    return <LoadingScreen/>;
   }
 
   return (
@@ -55,7 +60,7 @@ function Offer(): JSX.Element {
           <section className="offer">
             <div className="offer__gallery-container container">
               <div className="offer__gallery">
-                {currentOffer.images.map((image: string) => (
+                {currentOffer.images.slice(0, 6).map((image: string) => (
                   <div className="offer__image-wrapper" key={uuidv4()}>
                     <img className="offer__image" src={image} alt="Photo studio"/>
                   </div>
@@ -72,7 +77,7 @@ function Offer(): JSX.Element {
                 baseClassName="offer"
                 activeCity={currentOffer.city}
                 activeCard={currentOffer}
-                cityOffers={[...nearOfferCards, currentOffer]}
+                cityOffers={[...nearOfferCards.slice(0, 3), currentOffer]}
               />)}
           </section>
           <div className="container">

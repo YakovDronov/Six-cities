@@ -1,9 +1,9 @@
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const.ts';
 import {getFavotiteLength, getFavotiteOfferCard, getOfferCardByCity} from '../../utils.ts';
-import Layout from '../../components/layout.tsx';
+import Layout from '../../components/layout/layout.tsx';
 import {ShortOfferTypes} from '../../types/types.tsx';
-import Card from '../../components/card.tsx';
+import Card from '../../components/card/card.tsx';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../store/actions.ts';
 

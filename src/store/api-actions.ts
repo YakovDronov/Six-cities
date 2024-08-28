@@ -2,7 +2,7 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatch, AuthData, State, LoginData, UserData, ShortOfferTypes} from '../types/types.tsx';
 import {AxiosInstance} from 'axios';
 import {APIRoute, AppRoute, AuthorizationStatus} from '../const.ts';
-import {redirectToRoute, requireAuthorization, setOffers, setOffersDataLoadingStatus} from './actions.ts';
+import {redirectToRoute, requireAuthorization, setOffers} from './actions.ts';
 import {deleteToken, saveToken} from '../services/token.ts';
 
 export const fetchOffersAction = createAsyncThunk<void, undefined, {
@@ -12,9 +12,7 @@ export const fetchOffersAction = createAsyncThunk<void, undefined, {
 }>(
   'offers/setOffers',
   async (_arg, {dispatch, extra: api}) => {
-    dispatch(setOffersDataLoadingStatus(true));
     const {data} = await api.get<ShortOfferTypes[]>(APIRoute.Offers);
-    dispatch(setOffersDataLoadingStatus(false));
     dispatch(setOffers(data));
   }
 );

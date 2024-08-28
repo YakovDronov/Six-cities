@@ -1,8 +1,8 @@
 import {Link} from 'react-router-dom';
-import {AppRoute, AuthorizationStatus} from '../const.ts';
-import {getFavotiteLength, getFavotiteOfferCard} from '../utils.ts';
-import {logoutAction} from '../store/api-actions.ts';
-import {RootState, useAppDispatch, useAppSelector} from '../store/actions.ts';
+import {AppRoute, AuthorizationStatus} from '../../const.ts';
+import {getFavotiteLength, getFavotiteOfferCard} from '../../utils.ts';
+import {logoutAction} from '../../store/api-actions.ts';
+import {RootState, useAppDispatch, useAppSelector} from '../../store/actions.ts';
 import {useSelector} from 'react-redux';
 
 function Layout({children}: { children: React.ReactNode }) {

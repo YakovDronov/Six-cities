@@ -1,4 +1,4 @@
-import FormSubmit, {FormDataProps} from '../../../components/form-submit.tsx';
+import FormSubmit, {FormDataProps} from './form-submit.tsx';
 import {ReviewsTypes} from '../../../types/types.tsx';
 import {useAppSelector} from '../../../store/actions.ts';
 import {APIRoute, AppRoute, AuthorizationStatus} from '../../../const.ts';

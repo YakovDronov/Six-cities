@@ -1,40 +1,46 @@
 import {capitalizeFirstLetter, getAdultsCount, getBedroomsCount} from '../../../utils.ts';
 import {OfferTypes} from '../../../types/types.tsx';
 import Reviews from './reviews.tsx';
+import {useAppSelector} from '../../../store/actions.ts';
+import {AuthorizationStatus} from '../../../const.ts';
 
 type OfferContainerProps = {
   currentOffer: OfferTypes;
-  onHandleFavorite: () => Promise<void>;
+  onHandleFavorite: (id: string) => Promise<void>;
 }
 
 function OfferContainer({currentOffer, onHandleFavorite}: OfferContainerProps): JSX.Element {
-  const onHandleClickFavoriteButton = () => {
-    onHandleFavorite();
+  const authorizationStatus = useAppSelector(
+    (state) => state.authorizationReducer.authorizationStatus
+  );
+  const onHandleClickFavorite = () => {
+    onHandleFavorite(currentOffer.id);
   };
 
   return (
     <div className="offer__container container">
       <div className="offer__wrapper">
         {currentOffer.isPremium
-          ?
+          &&
           <div className="offer__mark">
             <span>Premium</span>
-          </div>
-          : null}
+          </div>}
         <div className="offer__name-wrapper">
           <h1 className="offer__name">
             {currentOffer.title}
           </h1>
-          <button
-            className={`offer__bookmark-button button ${currentOffer.isFavorite ? 'offer__bookmark-button--active' : ''}`}
-            type="button"
-            onClick={onHandleClickFavoriteButton}
-          >
-            <svg className="offer__bookmark-icon" width={31} height={33}>
-              <use xlinkHref="#icon-bookmark"/>
-            </svg>
-            <span className="visually-hidden">{currentOffer.isFavorite ? 'In bookmarks' : 'To bookmarks'}</span>
-          </button>
+          {authorizationStatus === AuthorizationStatus.Auth
+            &&
+            <button
+              className={`offer__bookmark-button button ${currentOffer.isFavorite ? 'offer__bookmark-button--active' : ''}`}
+              type="button"
+              onClick={onHandleClickFavorite}
+            >
+              <svg className="offer__bookmark-icon" width={31} height={33}>
+                <use xlinkHref="#icon-bookmark"/>
+              </svg>
+              <span className="visually-hidden">{currentOffer.isFavorite ? 'In bookmarks' : 'To bookmarks'}</span>
+            </button>}
         </div>
         <div className="offer__rating rating">
           <div className="offer__stars rating__stars">
@@ -82,9 +88,8 @@ function OfferContainer({currentOffer, onHandleFavorite}: OfferContainerProps): 
             </div>
             <span className="offer__user-name">{currentOffer.host.name}</span>
             {currentOffer.host.isPro
-              ?
-              <span className="offer__user-status">Pro</span>
-              : null}
+              &&
+              <span className="offer__user-status">Pro</span>}
           </div>
           <div className="offer__description">
             <p className="offer__text">
