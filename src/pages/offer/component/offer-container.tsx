@@ -1,8 +1,6 @@
 import {capitalizeFirstLetter, getAdultsCount, getBedroomsCount} from '../../../utils.ts';
 import {OfferTypes} from '../../../types/types.tsx';
 import Reviews from './reviews.tsx';
-import {useAppSelector} from '../../../store/actions.ts';
-import {AuthorizationStatus} from '../../../const.ts';
 
 type OfferContainerProps = {
   currentOffer: OfferTypes;
@@ -10,9 +8,6 @@ type OfferContainerProps = {
 }
 
 function OfferContainer({currentOffer, onHandleFavorite}: OfferContainerProps): JSX.Element {
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationReducer.authorizationStatus
-  );
   const onHandleClickFavorite = () => {
     onHandleFavorite(currentOffer.id);
   };
@@ -29,25 +24,23 @@ function OfferContainer({currentOffer, onHandleFavorite}: OfferContainerProps): 
           <h1 className="offer__name">
             {currentOffer.title}
           </h1>
-          {authorizationStatus === AuthorizationStatus.Auth
-            &&
-            <button
-              className={`offer__bookmark-button button ${currentOffer.isFavorite ? 'offer__bookmark-button--active' : ''}`}
-              type="button"
-              onClick={onHandleClickFavorite}
-            >
-              <svg className="offer__bookmark-icon" width={31} height={33}>
-                <use xlinkHref="#icon-bookmark"/>
-              </svg>
-              <span className="visually-hidden">{currentOffer.isFavorite ? 'In bookmarks' : 'To bookmarks'}</span>
-            </button>}
+          <button
+            className={`offer__bookmark-button button ${currentOffer.isFavorite ? 'offer__bookmark-button--active' : ''}`}
+            type="button"
+            onClick={onHandleClickFavorite}
+          >
+            <svg className="offer__bookmark-icon" width={31} height={33}>
+              <use xlinkHref="#icon-bookmark"/>
+            </svg>
+            <span className="visually-hidden">{currentOffer.isFavorite ? 'In bookmarks' : 'To bookmarks'}</span>
+          </button>
         </div>
         <div className="offer__rating rating">
           <div className="offer__stars rating__stars">
-            <span style={{width: `${currentOffer.rating / 5 * 100}%`}}/>
+            <span style={{width: `${Math.round(currentOffer.rating) / 5 * 100}%`}}/>
             <span className="visually-hidden">Rating</span>
           </div>
-          <span className="offer__rating-value rating__value">{currentOffer.rating}</span>
+          <span className="offer__rating-value rating__value">{Math.round(currentOffer.rating)}</span>
         </div>
         <ul className="offer__features">
           <li className="offer__feature offer__feature--entire">

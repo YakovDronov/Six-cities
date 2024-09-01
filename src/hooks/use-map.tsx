@@ -1,7 +1,7 @@
 import leaflet, { Map } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import {useRef, useEffect, useState, MutableRefObject} from 'react';
-import {TileLayers} from '../const.ts';
+import {TileLayerIcon} from '../components/map/utils/utils.ts';
 
 
 type City = {
@@ -25,8 +25,8 @@ function useMap(mapRef: MutableRefObject<HTMLDivElement | null>, city: City): Ma
       });
 
       leaflet
-        .tileLayer(TileLayers.UrlPattern,
-          {attribution: TileLayers.Attribution,},
+        .tileLayer(TileLayerIcon.UrlPattern,
+          {attribution: TileLayerIcon.Attribution,},
         )
         .addTo(instance);
 

@@ -1,4 +1,5 @@
 import {Fragment, SyntheticEvent, useState} from 'react';
+import {toast} from 'react-toastify';
 
 export type FormDataProps = {
   rating: number | null;
@@ -26,22 +27,32 @@ function FormSubmit({onHandleSubmitForm}: FormSubmitProps): JSX.Element {
     const newDate = {...formDate, [name]: newValue};
     setFormDate(newDate);
 
-    if (newDate.rating !== undefined &&
-      newDate.comment.length < MAX_TEXTAREA_VALUES &&
-      newDate.comment.length >= MIN_TEXTAREA_VALUES) {
+    const isCommentValid = newDate.comment.length >= MIN_TEXTAREA_VALUES && newDate.comment.length <= MAX_TEXTAREA_VALUES;
+
+    if (newDate.rating !== null && isCommentValid) {
       setIsDisabledButton(false);
+    } else {
+      setIsDisabledButton(true);
     }
   };
 
-  const onSubmitChange = (evt: SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
+  const onSubmitChange = async (evt: SyntheticEvent<HTMLFormElement, SubmitEvent>): Promise<void> => {
     evt.preventDefault();
-    onHandleSubmitForm(formDate);
-    setFormDate(DEFAULT_FORM_DATE);
-    setIsDisabledButton(true);
+    try {
+      await onHandleSubmitForm(formDate);
+      setFormDate(DEFAULT_FORM_DATE);
+      setIsDisabledButton(true);
+    } catch (err) {
+      toast.error('Failed to submit review. Please try again.');
+    }
+  };
+
+  const onHandleSubmitChange = (evt: SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
+    onSubmitChange(evt);
   };
 
   return (
-    <form className="reviews__form form" action="#" method="post" onSubmit={onSubmitChange}>
+    <form className="reviews__form form" action="#" method="post" onSubmit={onHandleSubmitChange}>
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
