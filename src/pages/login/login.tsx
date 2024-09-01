@@ -1,15 +1,22 @@
-import {Link} from 'react-router-dom';
-import {AppRoute} from '../../const.ts';
-import {FormEvent, useRef} from 'react';
-import {useAppDispatch} from '../../store/actions.ts';
+import {Link, useNavigate} from 'react-router-dom';
+import {AppRoute, AuthorizationStatus} from '../../const.ts';
+import {FormEvent, useEffect, useRef} from 'react';
+import {useAppDispatch, useAppSelector} from '../../store/actions.ts';
 import {AuthData} from '../../types/types.tsx';
 import {loginAction} from '../../store/api-actions.ts';
 
 function Login(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
-
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const authorizationStatus = useAppSelector((state) => state.authorizationReducer.authorizationStatus);
+
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      navigate(`${AppRoute.Main}`);
+    }
+  }, [authorizationStatus, navigate]);
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));

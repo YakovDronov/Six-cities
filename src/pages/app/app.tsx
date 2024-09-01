@@ -7,7 +7,7 @@ import Offer from '../offer/offer.tsx';
 import NotFound from '../../components/not-found/not-found.tsx';
 import PrivateRoute from '../../components/private-route/private-route.tsx';
 import {useAppSelector} from '../../store/actions.ts';
-import {LoadingScreen} from '../../components/loading/loading-screen.tsx';
+import {Loading} from '../../components/loading/loading.tsx';
 import {HistoryRouter} from '../../components/history-route/history-route.tsx';
 import {browserHistory} from '../../browser-history.ts';
 
@@ -16,7 +16,7 @@ function App(): JSX.Element {
   const isOffersDataLoading = useAppSelector((state) => state.authorizationReducer.isOffersDataLoading);
 
   if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {
-    return (<LoadingScreen/>);
+    return (<Loading/>);
   }
 
   return (

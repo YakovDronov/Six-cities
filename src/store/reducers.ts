@@ -1,10 +1,10 @@
 import {combineReducers} from '@reduxjs/toolkit';
-import {offersReducer} from './reducers/offersReducer.ts';
-import {currentCityReducer} from './reducers/cityReducer.ts';
-import {authorizationReducer} from './reducers/authorizationReducer.ts';
+import {offersiReducer} from './reducers/offersi-reducer.ts';
+import {currentCityReducer} from './reducers/city-reducer.ts';
+import {authorizationReducer} from './reducers/authorization-reducer.ts';
 
 export default combineReducers({
   currentCity: currentCityReducer,
-  offers: offersReducer,
+  offers: offersiReducer,
   authorizationReducer: authorizationReducer,
 });

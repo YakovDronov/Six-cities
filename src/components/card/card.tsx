@@ -1,8 +1,7 @@
 import {Link, useNavigate} from 'react-router-dom';
-import {APIRoute, AppRoute, AuthorizationStatus} from '../../const.ts';
+import {APIRoute, AppRoute} from '../../const.ts';
 import {capitalizeFirstLetter} from '../../utils.ts';
 import {OfferTypes, ShortOfferTypes} from '../../types/types.tsx';
-import {useAppSelector} from '../../store/actions.ts';
 import {api, store} from '../../store';
 import {fetchOffersAction} from '../../store/api-actions.ts';
 
@@ -16,7 +15,6 @@ type CardProps = {
 function Card({data, onHandlerChangeIdActiveCard, onHandlerRemoveIdActiveCard, type}: CardProps): JSX.Element {
   const imgWidth: string = type === 'favorites' ? '150' : '260';
   const imgHeight: string = type === 'favorites' ? '110' : '200';
-  const authorizationStatus = useAppSelector((state) => state.authorizationReducer.authorizationStatus);
   const navigate = useNavigate();
   const onHandleFavorite = async () => {
     try {
@@ -25,7 +23,7 @@ function Card({data, onHandlerChangeIdActiveCard, onHandlerRemoveIdActiveCard, t
       await api.post<OfferTypes[]>(`${APIRoute.Favorite}/${data.id}/${status}`);
       store.dispatch(fetchOffersAction());
     } catch {
-      navigate(AppRoute.Error);
+      navigate(`${AppRoute.Login}`);
     }
   };
 
@@ -57,8 +55,6 @@ function Card({data, onHandlerChangeIdActiveCard, onHandlerRemoveIdActiveCard, t
             <b className="place-card__price-value">&euro;{data.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          {authorizationStatus === AuthorizationStatus.Auth
-            &&
           <button
             className={`place-card__bookmark-button button ${data.isFavorite && 'place-card__bookmark-button--active'}`}
             type="button"
@@ -68,11 +64,11 @@ function Card({data, onHandlerChangeIdActiveCard, onHandlerRemoveIdActiveCard, t
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
             <span className="visually-hidden">{data.isFavorite ? 'In bookmarks' : 'To bookmarks'}</span>
-          </button>}
+          </button>
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${data.rating / 5 * 100}%`}}></span>
+            <span style={{width: `${Math.round(data.rating) / 5 * 100}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

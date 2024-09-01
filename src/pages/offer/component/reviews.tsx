@@ -11,19 +11,28 @@ function Reviews(): JSX.Element {
   const {id: offerId} = useParams();
   const [comments, setComments] = useState<ReviewsTypes[] | undefined>();
   const authorizationStatus = useAppSelector((state) => state.authorizationReducer.authorizationStatus);
+  const MIN_VISIBLE_COMMENTS: number = 0;
+  const MAX_VISIBLE_COMMENTS: number = 10;
+  const DATE_SUBSTRING_START_INDEX = 0;
+  const DATE_SUBSTRING_LENGTH = 10;
 
   const getComments = useCallback(async () => {
     try {
       const {data: commentsData} = await api.get<ReviewsTypes[]>(`${APIRoute.Comments}/${offerId}`);
-      setComments(commentsData);
+      const sortedComments = commentsData.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+      setComments(sortedComments);
     } catch {
-      navigate(AppRoute.Error);
+      navigate(`${AppRoute.Error}`);
     }
   }, [navigate, offerId]);
 
-  const onHandleSubmitForm = async (data: FormDataProps) => {
-    await api.post<FormDataProps>(`${APIRoute.Comments}/${offerId}`, data);
-    await getComments();
+  const onHandleSubmitForm = async (data: FormDataProps): Promise<void> => {
+    try {
+      await api.post<FormDataProps>(`${APIRoute.Comments}/${offerId}`, data);
+      await getComments();
+    } catch {
+      throw new Error('Failed to submit review. Please try again.');
+    }
   };
 
   useEffect(() => {
@@ -45,13 +54,13 @@ function Reviews(): JSX.Element {
       </h2>
       {comments && comments.length > 0 && (
         <ul className="reviews__list">
-          {comments.slice(0, 10).map((comment) => {
+          {comments.slice(MIN_VISIBLE_COMMENTS, MAX_VISIBLE_COMMENTS).map((comment) => {
             const reviewDate: Date = new Date(comment.date);
             const humanDate: string = reviewDate.toLocaleDateString('en-US', {
               year: 'numeric',
               month: 'long'
             });
-            const dateTime: string = comment.date.toString().slice(0, 10);
+            const dateTime: string = comment.date.toString().slice(DATE_SUBSTRING_START_INDEX, DATE_SUBSTRING_LENGTH);
             return (
               <li className="reviews__item" key={comment.id}>
                 <div className="reviews__user user">

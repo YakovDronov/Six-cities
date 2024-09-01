@@ -22,8 +22,9 @@ export const getOfferCardByCity = (offers: ShortOfferTypes[]) => {
 
 export const getFavotiteOfferCard = (offers: ShortOfferTypes[]) => offers.filter((offerCard: ShortOfferTypes) => offerCard.isFavorite);
 export const getFavotiteLength = (offers: ShortOfferTypes[]) => offers.filter((offerCard: ShortOfferTypes) => offerCard);
-export const getOfferById = (offers: ShortOfferTypes[], offerId: string | undefined) => offers.find((offer: ShortOfferTypes): boolean => offer.id === offerId);
-export const getNearOfferCardById = (offers: ShortOfferTypes[], offerId: string | undefined) => offers.filter((offer: ShortOfferTypes): boolean => offer.id !== offerId).slice(0, 3);
 
 export const getBedroomsCount = (count: number): string => `${count} Bedroom${count > 1 ? 's' : ''}`;
 export const getAdultsCount = (count: number): string => `Max ${count} adult${count > 1 ? 's' : ''}`;
+
+export const MIN_VISIBLE_CARDS: number = 0;
+export const MAX_VISIBLE_CARDS: number = 3;

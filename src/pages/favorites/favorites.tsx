@@ -1,16 +1,25 @@
-import {Link} from 'react-router-dom';
-import {AppRoute} from '../../const.ts';
+import {Link, useNavigate} from 'react-router-dom';
+import {AppRoute, AuthorizationStatus} from '../../const.ts';
 import {getFavotiteLength, getFavotiteOfferCard, getOfferCardByCity} from '../../utils.ts';
 import Layout from '../../components/layout/layout.tsx';
 import {ShortOfferTypes} from '../../types/types.tsx';
 import Card from '../../components/card/card.tsx';
 import {useSelector} from 'react-redux';
-import {RootState} from '../../store/actions.ts';
+import {RootState, useAppSelector} from '../../store/actions.ts';
+import {useEffect} from 'react';
 
 function Favorites(): JSX.Element {
   const offers = useSelector((state: RootState) => state.offers.offers);
   const offerCardsByCity = getOfferCardByCity(getFavotiteOfferCard(offers));
   const offerCardsLength = getFavotiteLength(getFavotiteOfferCard(offers));
+  const navigate = useNavigate();
+  const authorizationStatus = useAppSelector((state) => state.authorizationReducer.authorizationStatus);
+
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.NoAuth) {
+      navigate(`${AppRoute.Main}`);
+    }
+  }, [authorizationStatus, navigate]);
 
   return (
     <div className={`page ${offerCardsLength.length < 1 ? 'page--favorites-empty' : ''}`}>
@@ -18,7 +27,7 @@ function Favorites(): JSX.Element {
         <main
           className={`page__main page__main--favorites ${offerCardsLength.length < 1 ? 'page__main--favorites-empty' : ''}`}
         >
-          ${offerCardsLength.length > 0
+          {offerCardsLength.length > 0
             ?
             <div className="page__favorites-container container">
               <section className="favorites">

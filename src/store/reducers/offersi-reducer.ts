@@ -10,7 +10,7 @@ const initialState: initialState = {
   offers: []
 };
 
-export const offersReducer = createReducer(initialState, (builder) => {
+export const offersiReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(setOffers, (state, action) => {
       state.offers = action.payload;
