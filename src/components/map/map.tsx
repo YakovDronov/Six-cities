@@ -3,7 +3,7 @@ import 'leaflet/dist/leaflet.css';
 import {useRef, useEffect} from 'react';
 import useMap from '../../hooks/use-map.tsx';
 import {City, ShortOfferTypes} from '../../types/types.tsx';
-import {MarkersIcom} from './utils/utils.ts';
+import {MarkersIcon} from './utils/utils.ts';
 
 type MapProps = {
   baseClassName: string;
@@ -13,13 +13,13 @@ type MapProps = {
 }
 
 const defaultCustomIcon = leaflet.icon({
-  iconUrl: MarkersIcom.Default,
+  iconUrl: MarkersIcon.Default,
   iconSize: [27, 39],
   iconAnchor: [13, 39],
 });
 
 const currentCustomIcon = leaflet.icon({
-  iconUrl: MarkersIcom.Current,
+  iconUrl: MarkersIcon.Current,
   iconSize: [27, 39],
   iconAnchor: [13, 39],
 });

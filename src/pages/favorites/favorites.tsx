@@ -17,7 +17,7 @@ function Favorites(): JSX.Element {
 
   useEffect(() => {
     if (authorizationStatus === AuthorizationStatus.NoAuth) {
-      navigate(`${AppRoute.Main}`);
+      navigate(`${AppRoute.Login}`);
     }
   }, [authorizationStatus, navigate]);
 

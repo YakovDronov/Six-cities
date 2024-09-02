@@ -21,6 +21,7 @@ const DEFAULT_FORM_DATE: FormDataProps = {
 function FormSubmit({onHandleSubmitForm}: FormSubmitProps): JSX.Element {
   const [isDisabledButton, setIsDisabledButton] = useState(true);
   const [formDate, setFormDate] = useState<FormDataProps>(DEFAULT_FORM_DATE);
+  const [isSubmit, setIsSubmit] = useState(false);
 
   const handleFieldChange = ({name, value}: { name: keyof FormDataProps; value: string }): void => {
     const newValue = name === 'rating' ? parseInt(value, 10) : value;
@@ -38,12 +39,16 @@ function FormSubmit({onHandleSubmitForm}: FormSubmitProps): JSX.Element {
 
   const onSubmitChange = async (evt: SyntheticEvent<HTMLFormElement, SubmitEvent>): Promise<void> => {
     evt.preventDefault();
+    setIsSubmit(true);
+    setIsDisabledButton(true);
     try {
       await onHandleSubmitForm(formDate);
       setFormDate(DEFAULT_FORM_DATE);
-      setIsDisabledButton(true);
     } catch (err) {
       toast.error('Failed to submit review. Please try again.');
+    } finally {
+      setIsSubmit(false);
+      setIsDisabledButton(false);
     }
   };
 
@@ -52,7 +57,7 @@ function FormSubmit({onHandleSubmitForm}: FormSubmitProps): JSX.Element {
   };
 
   return (
-    <form className="reviews__form form" action="#" method="post" onSubmit={onHandleSubmitChange}>
+    <form className={`reviews__form form ${isSubmit ? 'reviews__form-submit' : ''}`} action="#" method="post" onSubmit={onHandleSubmitChange}>
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
@@ -67,6 +72,7 @@ function FormSubmit({onHandleSubmitForm}: FormSubmitProps): JSX.Element {
               checked={formDate.rating ? num === formDate.rating : false}
               onChange={(evt) => handleFieldChange({name: 'rating', value: evt.target.value})}
               value={num}
+              disabled={isSubmit}
             />
             <label
               htmlFor={`${num}-stars`}
@@ -88,6 +94,7 @@ function FormSubmit({onHandleSubmitForm}: FormSubmitProps): JSX.Element {
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={(evt) => handleFieldChange({name: 'comment', value: evt.target.value})}
         value={formDate.comment}
+        disabled={isSubmit}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">

@@ -6,7 +6,7 @@ import Map from '../../components/map/map.tsx';
 import LocationList from './components/location-list.tsx';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../store/actions.ts';
-import {sortingOptions} from '../../const.ts';
+import {SORTING_OPTIONS} from '../../const.ts';
 import {v4 as uuidv4} from 'uuid';
 import {getActiveOffersLength, getSortedOffers} from './utils.ts';
 
@@ -16,7 +16,7 @@ function MainScreen(): JSX.Element {
   const [activeCard, setActiveCard] = useState<ShortOfferTypes | null>(null);
   const [filteredOffers, setFilteredOffers] = useState<ShortOfferTypes[]>([]);
   const [isOpenSorting, setIsOpenSorting] = useState<boolean>(false);
-  const [selectedSorting, setSelectedSorting] = useState<Sorting>(sortingOptions[0]);
+  const [selectedSorting, setSelectedSorting] = useState<Sorting>(SORTING_OPTIONS[0]);
 
   useEffect(() => {
     setFilteredOffers(
@@ -74,7 +74,7 @@ function MainScreen(): JSX.Element {
                     <ul
                       className={`places__options places__options--custom ${isOpenSorting ? 'places__options--opened' : ''}`}
                     >
-                      {sortingOptions.map((sort: Sorting) => (
+                      {SORTING_OPTIONS.map((sort: Sorting) => (
                         <li className={`places__option ${selectedSorting === sort ? 'places__option--active' : ''}`}
                           tabIndex={0}
                           key={uuidv4()}

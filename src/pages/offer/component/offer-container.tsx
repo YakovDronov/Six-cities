@@ -40,7 +40,7 @@ function OfferContainer({currentOffer, onHandleFavorite}: OfferContainerProps): 
             <span style={{width: `${Math.round(currentOffer.rating) / 5 * 100}%`}}/>
             <span className="visually-hidden">Rating</span>
           </div>
-          <span className="offer__rating-value rating__value">{Math.round(currentOffer.rating)}</span>
+          <span className="offer__rating-value rating__value">{currentOffer.rating}</span>
         </div>
         <ul className="offer__features">
           <li className="offer__feature offer__feature--entire">

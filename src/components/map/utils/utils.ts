@@ -1,4 +1,4 @@
-export enum MarkersIcom {
+export enum MarkersIcon {
   Default = 'markup/img/pin.svg',
   Current = 'markup/img/pin-active.svg',
 }
